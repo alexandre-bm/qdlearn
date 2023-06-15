@@ -1,6 +1,8 @@
-
+# BUILD AND TEST
 pytest>=7.3.2
+hypothesis>=6.78.2
 
+# MODULE
 numpy>=1.24.3
 pandas>=2.0.2
 
