@@ -13,10 +13,10 @@ class ScoreFunction(ABC):
 class FitnessScore(ScoreFunction):
     
     def __init__(self, function:Callable) -> None:
-        self._function = function
+        self.function = function
     
     def __call__(self, phenotype:Phenotype) -> None:
-        return self._function(phenotype.value)
+        return self.function(phenotype.value)
     
     
 class NoveltyScore(ScoreFunction):
