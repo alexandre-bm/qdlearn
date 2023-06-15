@@ -8,8 +8,7 @@ def main():
     ph = Phenotype(5)
     f = lambda x : 4 + x
     fitness = FitnessScore(f)
-    print(fitness(ph))
-    
+    print(fitness(ph))    
     
     bounds = np.vstack((np.zeros(3), np.ones(3)))
     mesh = 10 * np.ones(3)

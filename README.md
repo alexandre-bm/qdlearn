@@ -1,3 +1,3 @@
 Quality-Discovery Algorithms
 
-![Tests](https://github.com/alexandre-bm/qdlearn/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/alexandre-bm/qdlearn/github/workflows/github-action.yml/badge.svg)
