@@ -1,4 +1,11 @@
-from qdlearn.function import FitnessFunction
+from hypothesis import given
+from hypothesis.strategies import floats
 
-def test_call_fitness_function() -> None:
-    assert FitnessFunction()
+from qdlearn.function import FitnessScore
+from qdlearn.phenotype import Phenotype
+
+@given(floats(allow_nan=False))
+def test_call_fitness_score_function(value:float) -> None:
+    phenotype = Phenotype(value)
+    f = lambda x : 4 + x
+    assert FitnessScore(f)(phenotype) == f(phenotype.value)

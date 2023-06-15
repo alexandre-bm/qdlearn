@@ -1,15 +1,36 @@
 from abc import ABC, abstractmethod
+from typing import Callable
 
-class BaseFunction(ABC):
+from .phenotype import Phenotype
+
+class ScoreFunction(ABC):
     
     @abstractmethod
+    def __call__(self, phenotype:Phenotype) -> None:
+        pass
+    
+    
+class FitnessScore(ScoreFunction):
+    
+    def __init__(self, function:Callable) -> None:
+        self._function = function
+    
+    def __call__(self, phenotype:Phenotype) -> None:
+        return self._function(phenotype.value)
+    
+    
+class NoveltyScore(ScoreFunction):
+    
+    def __init__(self) -> None:
+        pass 
+    
     def __call__(self) -> None:
         pass
     
     
-class FitnessFunction(BaseFunction):
+class CuriosityScore(ScoreFunction):
     
-    def __init__(self):
+    def __init__(self) -> None:
         pass 
     
     def __call__(self) -> None:
