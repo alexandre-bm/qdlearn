@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Callable
 
-from .phenotype import Phenotype
+from .core.phenotype import Phenotype
 
 class ScoreFunction(ABC):
     

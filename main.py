@@ -1,25 +1,17 @@
-from src.qdlearn.function import FitnessScore 
-from src.qdlearn.phenotype import Phenotype
-from src.qdlearn.containers import Grid, Cell
+from src.qdlearn.core.genotype import Genotype, Population
+from src.qdlearn.containers.map_elites import MAPEliteRepertoire
 
 import numpy as np
 
 def main():
-    ph = Phenotype(5)
-    f = lambda x : 4 + x
-    fitness = FitnessScore(f)
-    print(fitness(ph))    
+    gen = Genotype(np.array([1,2,3]))
+    pop = Population([gen, gen, gen])
+    pop.append(gen)
+    print(pop.values)
     
-    bounds = np.vstack((np.zeros(3), np.ones(3)))
-    mesh = 10 * np.ones(3)
-    grid = Grid(bounds, mesh)
-    print(grid.shape)
-
-    c = Cell()
-    c.push(1)
-    c.push(2)
-    c.push(1)
-    print(c)
-
+    mer = MAPEliteRepertoire(pop)
+    mer.add(gen)
+    print(mer.sample())
+    
 if __name__ == '__main__':
     main()
