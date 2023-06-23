@@ -1,16 +1,11 @@
 from pytest import fixture 
 
-import numpy as np
-
-from qdlearn.containers import Grid, Cell 
+from qdlearn.core.genotype import Genotype, Population 
 
 @fixture 
-def grid():
-    bounds = np.vstack((np.zeros(3), np.ones(3)))
-    mesh = 10 * np.ones(3)
-    return Grid(bounds, mesh)
+def genotype():
+    return Genotype([1,2,3])
 
-
-@fixture 
-def cell():
-    return Cell()
+@fixture
+def population():
+    return Population([Genotype([1,2,3]), Genotype([1,2,3])])
