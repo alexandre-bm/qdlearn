@@ -1,49 +1,35 @@
-from __future__ import annotations
-
-from collections.abc import Sequence, MutableSequence
+from collections.abc import Sequence
+from ..types import Genotype, Generator
 
 import numpy as np
-
-class Genotype:
     
-    def __init__(self, genotype: Sequence) -> None:
-        super().__init__()
-        self.genotype = genotype
-        
-    @property
-    def values(self):
-        return self.genotype
-    
-    
-class Population(MutableSequence):
+class Population(Sequence[Sequence]):
     
     def __init__(self, population: Sequence[Genotype]):
+        self.capacity = len(population)
         self.population = population
+        self.idx = len(self.values)
         
-    def __delitem__(self, genotype:Genotype) -> None:
-        return super().__delitem__()
-        
-    def __getitem__(self, genotype:Genotype) -> None:
-        return super().__getitem__()
-        
-    def __setitem__(self, genotype:Genotype, new_genotype:Genotype) -> None:
-        return super().__setitem__()
-        
+    def __getitem__(self, id:int) -> Genotype:
+        if id >= self.idx:
+            raise ValueError(f"Index {id} is not in the population")
+        return self.values[id]
+    
     def __len__(self) -> int:
-        return len(self.population)
+        return self.idx
     
     @property
     def values(self):
-            return np.array([self.population[k].values for k in range(len(self))])
+        return self.population[~np.all(self.population == 0, axis=1)]
     
-    def append(self, new_genotype: Genotype) -> Population:
-        self.population.append(new_genotype)
-        return self
-        
-    def insert(self, new_genotype: Genotype) -> None:
-        pass
-        
-    def sample(self, idx: int) -> Genotype:
-        return self.population[idx]
+    def append(self, new_genotype: Genotype) -> None:
+        if self.idx >= self.capacity:
+            self._resize(self.capacity * 2)
+        self.population[self.idx] = new_genotype
+        self.idx += 1
     
+    def _resize(self, new_capacity:int) -> None:
+        population = np.zeros((new_capacity, self.population.shape[1]))
+        population[:len(self.population)] = self.population
+        self.population = population.astype(float)
     
