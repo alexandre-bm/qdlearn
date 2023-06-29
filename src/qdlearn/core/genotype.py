@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from ..types import Genotype, Generator
+from ..types import Genotype
 
 import numpy as np
     
@@ -8,7 +8,7 @@ class Population(Sequence[Sequence]):
     def __init__(self, population: Sequence[Genotype]):
         self.capacity = len(population)
         self.population = population
-        self.idx = len(self.values)
+        self.idx = self._set_idx()
         
     def __getitem__(self, id:int) -> Genotype:
         if id >= self.idx:
@@ -17,6 +17,9 @@ class Population(Sequence[Sequence]):
     
     def __len__(self) -> int:
         return self.idx
+
+    def _set_idx(self) -> int:
+        return len(self.population[~np.all(self.population == 0, axis=1)])
     
     @property
     def values(self):
@@ -32,4 +35,5 @@ class Population(Sequence[Sequence]):
         population = np.zeros((new_capacity, self.population.shape[1]))
         population[:len(self.population)] = self.population
         self.population = population.astype(float)
+        self.capacity = new_capacity
     
